@@ -5,6 +5,11 @@ export type FullMeta = { ctx: Record<string, any>; meta: any };
 
 export interface Plugin {
 	/**
+	 * Optional hook executed init handling.
+	 */
+	init?(options: LoggerOptions): void;
+
+	/**
 	 * Optional hook executed before handling a log message.
 	 */
 	before?(level: LogLevel, ctx: Record<string, any>, message: any, ...optional: any[]): Promise<void> | void;

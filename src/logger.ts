@@ -19,6 +19,13 @@ export class Logger {
 		this.format = options.format;
 		this.context = options.context;
 		this.filter = options.filter;
+
+		// Initialize plugins
+		this.init(options);
+	}
+
+	private async init(options: LoggerOptions) {
+		await Promise.allSettled(this.plugins.map((p) => p.init?.(options)));
 	}
 
 	private async logInternal(level: LogLevel, message: any, ...optional: any[]) {
@@ -32,7 +39,13 @@ export class Logger {
 
 		const formatted = this.format ? this.format(level, context, message, ...optional) : message;
 
-		await Promise.allSettled(this.plugins.map((p) => p.handle(level, context, formatted, ...optional)));
+		await Promise.allSettled(
+			this.plugins.map(async (plugin) => {
+				if (plugin.before) await plugin.before(level, context, formatted, ...optional);
+				await plugin.handle(level, context, formatted, ...optional);
+				if (plugin.after) await plugin.after(level, context, formatted, ...optional);
+			}),
+		);
 	}
 
 	info(message: any, ...optional: any[]) {
