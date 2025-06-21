@@ -1,0 +1,59 @@
+{
+  "name": "loggest",
+  "version": "1.0.0",
+  "description": "A flexible, minimalistic logging utility package,",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js",
+      "require": "./dist/index.js"
+    },
+    "./*": {
+      "types": "./dist/*.d.ts",
+      "import": "./dist/*.js",
+      "default": "./dist/*.js",
+      "require": "./dist/*.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "clean": "rm -rf dist",
+    "test": "jest",
+    "build": "npm run clean && jest && tsc",
+    "upload": "npm run build && npm publish --access public",
+    "play": "NODE_ENV=development tsx watch --tsconfig ./tsconfig.json ./src/example.ts"
+  },
+  "keywords": [
+    "loggest",
+    "browser",
+    "logger",
+    "node",
+    "log",
+    "js"
+  ],
+  "author": "appsaeed7@gmail.com",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "appsaeed/loggest"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.27.0",
+    "@types/jest": "^29.5.14",
+    "axios": "^1.10.0",
+    "eslint": "^9.27.0",
+    "fastify": "^5.3.3",
+    "globals": "^16.2.0",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.3.4",
+    "tsx": "^4.20.3",
+    "typescript-eslint": "^8.33.0"
+  }
+}
