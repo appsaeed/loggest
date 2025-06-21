@@ -11,7 +11,7 @@ export class FileLog implements Plugin {
 	}
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	async log(level: LogLevel, _: Record<string, unknown>, message: any, ...optional: unknown[]): Promise<void> {
+	async handle(level: LogLevel, _: Record<string, unknown>, message: any, ...optional: unknown[]): Promise<void> {
 		const iosTime = new Date().toISOString();
 		const optData = optional.length > 0 ? encodeJson(optional) : "";
 		const content = encodeJson(message);

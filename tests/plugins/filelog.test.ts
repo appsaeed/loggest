@@ -27,7 +27,7 @@ describe("FileLog", () => {
 	test.each(cases)("logs level %s with message '%s' and optional %p", async (level, message, optional) => {
 		const plugin = new FileLog({ path: filePath });
 
-		await plugin.log(level as any, {}, message, ...optional);
+		await plugin.handle(level as any, {}, message, ...optional);
 
 		// mkdir always called once with correct args
 		expect(fs.mkdir).toHaveBeenCalledWith(".", { recursive: true });

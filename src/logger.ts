@@ -32,7 +32,7 @@ export class Logger {
 
 		const formatted = this.format ? this.format(level, context, message, ...optional) : message;
 
-		await Promise.allSettled(this.plugins.map((t) => t.log(level, context, formatted, ...optional)));
+		await Promise.allSettled(this.plugins.map((p) => p.handle(level, context, formatted, ...optional)));
 	}
 
 	info(message: any, ...optional: any[]) {

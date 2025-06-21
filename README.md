@@ -31,7 +31,7 @@ import { Logger } from "loggest";
 const logger = new Logger({
 	plugins: [
 		{
-			log: function (level, _, message, ...optional) {
+			handle: function (level, _, message, ...optional) {
 				console.log(level, message, ...optional);
 			},
 		},
@@ -46,7 +46,7 @@ logger.info("Application started", "additional context");
 
 ```ts
 import { Logger } from "loggest";
-import FileLog from "loggest/dist/plugins/FileLog"
+import FileLog from "loggest/dist/plugins/FileLog";
 
 const logger = new Logger({
 	plugins: [new FileLog()],
@@ -93,7 +93,7 @@ Custom plugins can be created using either an object or a class.
 
 ```ts
 const CustomLogger = {
-	log: async (level: LogLevel, ctx, message: any, ...optional: any[]) => {
+	handle: async (level: LogLevel, ctx, message: any, ...optional: any[]) => {
 		// Custom handling logic: store in a database, send to an API, etc.
 	},
 };
@@ -103,7 +103,7 @@ const CustomLogger = {
 
 ```ts
 export class ColoredConsoleLog {
-	async log(level: LogLevel, ctx, message, ...optional: any[]): Promise<void> {
+	async handle(level: LogLevel, ctx, message, ...optional: any[]): Promise<void> {
 		const colorMap = {
 			info: "\x1b[36m", // Cyan
 			warn: "\x1b[33m", // Yellow
@@ -133,7 +133,8 @@ To enable type checking and IntelliSense support, implement the `Plugin` interfa
 import { LogLevel, Plugin } from "loggest";
 
 export class MyLogger implements Plugin {
-	async log(level: LogLevel, ctx: Record<string, any>, message: any, ...optional: any[]): Promise<void> {
+
+	async handle(level, ctx, message, ...optional) {
 		// Custom logic for handling log output
 	}
 }

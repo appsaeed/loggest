@@ -3,7 +3,7 @@ import { Logger } from "../src/logger";
 // Mock Plugin
 const createMockPlugin = () => {
 	return {
-		log: jest.fn(),
+		handle: jest.fn(),
 	};
 };
 
@@ -21,7 +21,7 @@ describe("Logger", () => {
 	it("should call plugin's log method for allowed level", async () => {
 		await logger.info("Hello");
 
-		expect(plugin.log).toHaveBeenCalledWith("info", {}, "Hello");
+		expect(plugin.handle).toHaveBeenCalledWith("info", {}, "Hello");
 	});
 
 	it("should not log if level is not in allowed levels", async () => {
@@ -31,7 +31,7 @@ describe("Logger", () => {
 		});
 		await logger.info("This should be ignored");
 
-		expect(plugin.log).not.toHaveBeenCalled();
+		expect(plugin.handle).not.toHaveBeenCalled();
 	});
 
 	it("should apply format if provided", async () => {
@@ -47,7 +47,7 @@ describe("Logger", () => {
 		await logger.warn("Formatted message");
 
 		expect(formatter).toHaveBeenCalled();
-		expect(plugin.log).toHaveBeenCalledWith("warn", {}, "[WARN] Formatted message");
+		expect(plugin.handle).toHaveBeenCalledWith("warn", {}, "[WARN] Formatted message");
 	});
 
 	it("should apply context", async () => {
@@ -57,7 +57,7 @@ describe("Logger", () => {
 		});
 		await logger.error("Test error");
 
-		expect(plugin.log).toHaveBeenCalledWith("error", { env: "test" }, "Test error");
+		expect(plugin.handle).toHaveBeenCalledWith("error", { env: "test" }, "Test error");
 	});
 
 	it("should skip log if filter returns false", async () => {
@@ -70,7 +70,7 @@ describe("Logger", () => {
 		await logger.debug("Ignore me");
 
 		expect(filter).toHaveBeenCalled();
-		expect(plugin.log).not.toHaveBeenCalled();
+		expect(plugin.handle).not.toHaveBeenCalled();
 	});
 
 	it("should pass optional params to filter and format", async () => {
@@ -87,6 +87,6 @@ describe("Logger", () => {
 
 		expect(filter).toHaveBeenCalledWith("info", {}, "Hello", { user: "Saeed" });
 		expect(format).toHaveBeenCalledWith("info", {}, "Hello", { user: "Saeed" });
-		expect(plugin.log).toHaveBeenCalledWith("info", {}, 'Hello[{"user":"Saeed"}]', { user: "Saeed" });
+		expect(plugin.handle).toHaveBeenCalledWith("info", {}, 'Hello[{"user":"Saeed"}]', { user: "Saeed" });
 	});
 });

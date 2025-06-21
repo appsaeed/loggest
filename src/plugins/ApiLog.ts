@@ -11,7 +11,7 @@ export class ApiLog implements Plugin {
 	//
 	constructor(private options: FetchLogOptions) {}
 
-	async log(level: LogLevel, ctx: Record<string, any>, message: any, ...optional: any[]): Promise<void> {
+	async handle(level: LogLevel, ctx: Record<string, any>, message: any, ...optional: any[]): Promise<void> {
 		await fetch(this.options.url, {
 			method: this.options?.method?.toUpperCase() || "POST",
 			headers: {
