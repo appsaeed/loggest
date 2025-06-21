@@ -1,30 +1,10 @@
 {
   "name": "loggest",
-  "version": "1.0.1",
+  "version": "1.0.5",
   "description": "A flexible, minimalistic logging utility package,",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "type": "module",
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "default": "./dist/index.js",
-      "require": "./dist/index.js"
-    },
-    "./*": {
-      "types": "./dist/*.d.ts",
-      "import": "./dist/*.js",
-      "default": "./dist/*.js",
-      "require": "./dist/*.js"
-    },
-    "./plugins": {
-      "types": "./dist/plugins/index.d.ts",
-      "import": "./dist/plugins/index.js",
-      "default": "./dist/plugins/index.js",
-      "require": "./dist/plugins/index.js"
-    }
-  },
   "files": [
     "dist",
     "README.md"
@@ -41,10 +21,9 @@
     "browser",
     "logger",
     "node",
-    "log",
-    "js"
+    "log"
   ],
-  "author": "appsaeed7@gmail.com",
+  "author": "Creator <appsaeed7@gmail.com>",
   "license": "MIT",
   "repository": {
     "type": "git",

@@ -1,5 +1,5 @@
 import { Logger } from "./logger";
-import { ConsoleLog } from "./plugins";
+import ConsoleLog from "./plugins/ConsoleLog";
 import FileLog from "./plugins/FileLog";
 
 const logger = new Logger({
