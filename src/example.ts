@@ -7,4 +7,4 @@ const logger = new Logger({
 });
 
 logger.info("hello", { name: "saeed", age: "23" });
-logger.log("debug", "helo world");
+logger.log("debug", "new world");

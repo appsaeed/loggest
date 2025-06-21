@@ -1,5 +1,3 @@
-import { promises as fs } from "fs";
-import * as path from "path";
 import { LogLevel, Plugin } from "../types.js";
 
 export class FileLog implements Plugin {
@@ -12,6 +10,8 @@ export class FileLog implements Plugin {
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	async log(level: LogLevel, _: Record<string, unknown>, message: any, ...optional: unknown[]): Promise<void> {
+		const fs = (await import("fs")).promises;
+		const path = await import("path");
 		const iosTime = new Date().toISOString();
 		const optData = optional.length > 0 ? encodeJson(optional) : "";
 		const content = encodeJson(message);
