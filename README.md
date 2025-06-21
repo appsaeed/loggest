@@ -1,6 +1,6 @@
-# Fast & Pluggable Logging Utility
+# Fast & Pluggable logger
 
-> A flexible, minimalistic logging utility package — fast and pluggable for es6 javascript application.
+> A flexible, minimalistic logging utility package — fast and pluggable.
 
 ### ✨ Features
 
@@ -11,7 +11,7 @@
 -   🧠 Context-aware and structured logs
 -   🎚️ Filterable and configurable log levels
 
-Includes everything needed for structured logging in modern backends, while remaining small and dependency-free.
+Includes everything needed for structured logging, while remaining small and dependency-free.
 
 ## 📦 Installation
 
