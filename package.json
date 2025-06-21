@@ -1,6 +1,6 @@
 {
   "name": "loggest",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A flexible, minimalistic logging utility package,",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -17,6 +17,12 @@
       "import": "./dist/*.js",
       "default": "./dist/*.js",
       "require": "./dist/*.js"
+    },
+    "./plugins": {
+      "types": "./dist/plugins/index.d.ts",
+      "import": "./dist/plugins/index.js",
+      "default": "./dist/plugins/index.js",
+      "require": "./dist/plugins/index.js"
     }
   },
   "files": [
