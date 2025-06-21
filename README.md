@@ -46,7 +46,7 @@ logger.info("Application started", "additional context");
 
 ```ts
 import { Logger } from "loggest";
-import { FileLog } from "loggest/plugins/file";
+import FileLog from "loggest/plugins/FileLog";
 
 const logger = new Logger({
 	plugins: [new FileLog()],
@@ -61,7 +61,8 @@ Plugins can be mixed and matched, and custom implementations can also be added a
 ## ⚙️ Advanced Configuration
 
 ```ts
-import { Logger, FileLog, CustomPlugin } from "loggest";
+import Logger from "loggest";
+import { Logger, FileLog, CustomPlugin } from "loggest/plugins";
 
 const logger = new Logger({
 	// customize level defalut: info, warn, error, debug, log.

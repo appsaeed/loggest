@@ -2,7 +2,7 @@ import { promises as fs } from "fs";
 import * as path from "path";
 import { LogLevel, Plugin } from "../types.js";
 
-export class FileLog implements Plugin {
+class FileLog implements Plugin {
 	//
 	private filePath: string;
 

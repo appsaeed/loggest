@@ -7,7 +7,7 @@ jest.mock("fs", () => ({
 }));
 
 import { promises as fs } from "fs";
-import { FileLog } from "../../src/plugins/file";
+import FileLog from "../../src/plugins/FileLog";
 
 describe("FileLog", () => {
 	const filePath = "./test.log";

@@ -1,6 +1,5 @@
 import { Logger } from "./logger";
-import { ConsoleLog } from "./plugins/console";
-import { FileLog } from "./plugins/file";
+import FileLog from "./plugins/FileLog";
 
 const logger = new Logger({
 	plugins: [new FileLog({ path: "./logs/node.log" }), new ConsoleLog()],
