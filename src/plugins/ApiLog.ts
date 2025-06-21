@@ -7,7 +7,7 @@ interface FetchLogOptions {
 	headers?: Record<string, string>; // Optional custom headers
 }
 
-export class FetchLog implements Plugin {
+export class ApiLog implements Plugin {
 	//
 	constructor(private options: FetchLogOptions) {}
 
@@ -22,3 +22,5 @@ export class FetchLog implements Plugin {
 		});
 	}
 }
+
+export default ApiLog;

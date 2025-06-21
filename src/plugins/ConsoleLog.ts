@@ -12,3 +12,5 @@ export class ConsoleLog implements Plugin {
 		console.log(`${colorMap[level] || ""} ${level.toString()}: `, message, ...op);
 	}
 }
+
+export default ConsoleLog;
