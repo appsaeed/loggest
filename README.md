@@ -46,7 +46,7 @@ logger.info("Application started", "additional context");
 
 ```ts
 import { Logger } from "loggest";
-import FileLog from "loggest/plugins/FileLog";
+import FileLog from "loggest/dist/plugins/FileLog"
 
 const logger = new Logger({
 	plugins: [new FileLog()],
@@ -62,13 +62,14 @@ Plugins can be mixed and matched, and custom implementations can also be added a
 
 ```ts
 import Logger from "loggest";
-import { Logger, FileLog, CustomPlugin } from "loggest/plugins";
+import FileLog from "loggest/dist/plugins/FileLog"
+import ApiLog from "loggest/dist/plugins/ApiLog"
 
 const logger = new Logger({
 	// customize level defalut: info, warn, error, debug, log.
 	levels: ["info", "warn"] //now only will log info, warn.
 	plugins: [
-		new ApiPlugin({ url: "https://example.com/logs" }),
+		new ApiLog({ url: "https://example.com/logs" }),
 		//other plugins
 	],
 	context: { app: "my-app", env: "production" } // context object,
@@ -129,7 +130,7 @@ logger.info("Server started successfully");
 To enable type checking and IntelliSense support, implement the `Plugin` interface:
 
 ```ts
-import { LogLevel, Plugin } from "loggest/types";
+import { LogLevel, Plugin } from "loggest";
 
 export class MyLogger implements Plugin {
 	async log(level: LogLevel, ctx: Record<string, any>, message: any, ...optional: any[]): Promise<void> {
