@@ -33,19 +33,13 @@ export class Logger {
 		if (!this.levels.includes(level)) return;
 
 		// Kee and context separate for filter & format
-		const context = this.context || {};
+		const ctx = this.context || {};
 
-		if (this.filter && !this.filter(level, context, message, ...optional)) return;
+		if (this.filter && !this.filter(level, ctx, message, ...optional)) return;
 
-		const formatted = this.format ? this.format(level, context, message, ...optional) : message;
+		const formatted = this.format ? this.format(level, ctx, message, ...optional) : message;
 
-		await Promise.allSettled(
-			this.plugins.map(async (plugin) => {
-				if (plugin.before) await plugin.before(level, context, formatted, ...optional);
-				await plugin.handle(level, context, formatted, ...optional);
-				if (plugin.after) await plugin.after(level, context, formatted, ...optional);
-			}),
-		);
+		await Promise.allSettled(this.plugins.map((p) => p.handle(level, ctx, formatted, ...optional)));
 	}
 
 	info(message: any, ...optional: any[]) {
