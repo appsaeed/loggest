@@ -29,17 +29,29 @@ export class Logger {
 	}
 
 	private async logInternal(level: LogLevel, message: any, ...optional: any[]) {
-		//filter log level to only support allow logs level
+
+		// check log level to only support allow logs level
 		if (!this.levels.includes(level)) return;
 
-		// Kee and context separate for filter & format
+		//get context to send into external
 		const ctx = this.context || {};
 
+		// 2. Early exit if a filter exists and blocks it
 		if (this.filter && !this.filter(level, ctx, message, ...optional)) return;
 
+		// 3. Format the log message only once
 		const formatted = this.format ? this.format(level, ctx, message, ...optional) : message;
 
-		await Promise.all(this.plugins.map((p) => p.handle(level, ctx, formatted, ...optional)));
+		// 4. Filter valid plugins once
+		const plugins = this.plugins.filter((p) => !!p && typeof p.handle === "function");
+
+		// 5. Run all plugin stages in parallel — before, handle, after
+		await Promise.all(plugins.map(async (plugin) => {
+			await plugin.before?.(level, ctx, formatted, ...optional);
+			await plugin.handle(level, ctx, formatted, ...optional);
+			await plugin.after?.(level, ctx, formatted, ...optional);
+		}));
+
 	}
 
 	info(message: any, ...optional: any[]) {
