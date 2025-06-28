@@ -6,27 +6,27 @@ export class Logger {
 	/**
 	 * allowed log levels for this logger instance.
 	 */
-	private levels: LogLevel[] = ["info", "warn", "error", "debug"];
+	readonly #levels: LogLevel[] = ["info", "warn", "error", "debug"];
 
 	/**
 	 * List of plugins used to handle log messages
 	 */
-	private plugins: Plugin[];
+	readonly #plugins: Plugin[];
 
 	/**
 	 * Optional custom formatter for log message output.
 	 */
-	private format?: LoggerOptions["format"];
+	readonly #format?: LoggerOptions["format"];
 
 	/**
 	 * Optional shared context metadata for all log entries.
 	 */
-	private context?: LoggerOptions["context"];
+	readonly #context?: LoggerOptions["context"];
 
 	/**
 	 * Optional filter function to control which messages are logged.
 	 */
-	private filter?: LoggerOptions["filter"];
+	readonly #filter?: LoggerOptions["filter"];
 
 	/**
 	 * Create a new logger instance.
@@ -34,12 +34,12 @@ export class Logger {
 	constructor(options: LoggerOptions) {
 
 		// apply custom log levels if provided
-		if (options.levels) this.levels = options.levels;
+		if (options.levels) this.#levels = options.levels;
 
-		this.plugins = options.plugins;
-		this.format = options.format;
-		this.context = options.context;
-		this.filter = options.filter;
+		this.#plugins = options.plugins;
+		this.#format = options.format;
+		this.#context = options.context;
+		this.#filter = options.filter;
 
 		// Initialize plugins with the logger options
 		this.init(options);
@@ -51,7 +51,7 @@ export class Logger {
 	 * This function runs once per plugin for a single instance of the logger.
 	 */
 	private async init(options: LoggerOptions) {
-		await Promise.all(this.plugins.map((p) => p.init?.(options)));
+		await Promise.all(this.#plugins.map((p) => p.init?.(options)));
 	}
 
 	/**
@@ -62,19 +62,19 @@ export class Logger {
 	private async logInternal(level: LogLevel, message: any, ...optional: any[]) {
 
 		// Skip if log level not support log levels
-		if (!this.levels.includes(level)) return;
+		if (!this.#levels.includes(level)) return;
 
 		//get context to send into external
-		const ctx = this.context || {};
+		const ctx = this.#context || {};
 
 		// Skip if filter blocks this log 
-		if (this.filter && !this.filter(level, ctx, message, ...optional)) return;
+		if (this.#filter && !this.#filter(level, ctx, message, ...optional)) return;
 
 		// Format log message if formatter exists
-		const formatted = this.format ? this.format(level, ctx, message, ...optional) : message;
+		const formatted = this.#format ? this.#format(level, ctx, message, ...optional) : message;
 
 		// Filter valid plugins once
-		const plugins = this.plugins.filter((p) => !!p && typeof p.handle === "function");
+		const plugins = this.#plugins.filter((p) => !!p && typeof p.handle === "function");
 
 		// Run all plugin stages in parallel — before, handle, after
 		await Promise.all(plugins.map(async (plugin) => {
