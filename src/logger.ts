@@ -2,15 +2,30 @@
 import { LoggerOptions, LogLevel, Plugin } from "./types.js";
 
 export class Logger {
-	//
+
+	/**
+	 * allowed log levels for this logger instance.
+	 */
 	private levels: LogLevel[] = ["info", "warn", "error", "debug"];
 
+	/**
+	 * List of plugins used to handle log messages
+	 */
 	private plugins: Plugin[];
 
+	/**
+	 * Optional custom formatter for log message output.
+	 */
 	private format?: LoggerOptions["format"];
 
+	/**
+	 * Optional shared context metadata for all log entries.
+	 */
 	private context?: LoggerOptions["context"];
 
+	/**
+	 * Optional filter function to control which messages are logged.
+	 */
 	private filter?: LoggerOptions["filter"];
 
 	/**
