@@ -42,7 +42,7 @@ export class Logger {
 		this.#filter = options.filter;
 
 		// Initialize plugins with the logger options
-		this.init(options);
+		this.#init(options);
 	}
 
 	/**
@@ -50,7 +50,7 @@ export class Logger {
 	 * 
 	 * This function runs once per plugin for a single instance of the logger.
 	 */
-	private async init(options: LoggerOptions) {
+	async #init(options: LoggerOptions) {
 		await Promise.all(this.#plugins.map((p) => p.init?.(options)));
 	}
 
@@ -59,7 +59,7 @@ export class Logger {
 	 * 
 	 * This function runs per log call for all registered plugins.
 	 */
-	private async logInternal(level: LogLevel, message: any, ...optional: any[]) {
+	async #logInternal(level: LogLevel, message: any, ...optional: any[]) {
 
 		// Skip if log level not support log levels
 		if (!this.#levels.includes(level)) return;
@@ -87,27 +87,27 @@ export class Logger {
 
 	/** Log info message; accepts mixed data for this log */
 	info(message: any, ...optional: any[]) {
-		return this.logInternal("info", message, ...optional);
+		return this.#logInternal("info", message, ...optional);
 	}
 
 	/** Log warn message; accepts mixed data for this log */
 	warn(message: any, ...optional: any[]) {
-		return this.logInternal("warn", message, ...optional);
+		return this.#logInternal("warn", message, ...optional);
 	}
 
 	/** Log error message; accepts mixed data for this log */
 	error(message: any, ...optional: any[]) {
-		return this.logInternal("error", message, ...optional);
+		return this.#logInternal("error", message, ...optional);
 	}
 
 	/** Log debug message; accepts mixed data for this log */
 	debug(message: any, ...optional: any[]) {
-		return this.logInternal("debug", message, ...optional);
+		return this.#logInternal("debug", message, ...optional);
 	}
 
 	/** Log message at custom level; accepts mixed data for this log */
 	log(level: LogLevel, message: any, ...optional: any[]) {
-		return this.logInternal(level, message, ...optional);
+		return this.#logInternal(level, message, ...optional);
 	}
 }
 export default Logger;
